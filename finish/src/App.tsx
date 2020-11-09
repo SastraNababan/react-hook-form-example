@@ -30,7 +30,16 @@ function Form() {
     reset,
   } = useForm<FormInputs>();
   const onSubmit = async (data: FormInputs) => {
-    console.log(data);
+    if (data.password !== data.confirmPassword) {
+      setError("password", {
+        type: "passwordMatch",
+        message: "Your password and confirmation password do not match.",
+      });
+      setError("confirmPassword", {
+        type: "passwordMatch",
+        message: "Your password and confirmation password do not match.",
+      });
+    }
     await later(3000);
     alert("Thank you for Register");
     reset();
@@ -87,7 +96,6 @@ function Form() {
         {errors.password && (
           <p className="error"> {errors.password.message} </p>
         )}
-
         <label htmlFor=""> Confirm Password * </label>
         <PasswordPopover>
           {(
@@ -123,7 +131,7 @@ function Form() {
           />
           <span>I Agree to Term of Services and Privacy Policy * </span>
         </label>
-        {errors.email && <p className="error"> Email Required </p>}
+        {errors.agree && <p className="error"> Aggrement Required </p>}
 
         <label className="row">
           <input type="checkbox" name="subscribe" ref={register()} />
